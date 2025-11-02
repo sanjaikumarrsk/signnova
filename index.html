@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SignNova - Gesture Recognizer</title>
+  <style>
+    /* FADE TRANSITION */
+    .page {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+    .page.loaded {
+        opacity: 1;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode page">
+  <div class="container">
+    
+    <header class="header-controls">
+        <button id="home-btn" class="nav-btn" onclick="navigate('home.html')">
+            <span role="img" aria-label="home">🏠</span> Home
+        </button>
+        <div class="title-area">
+            <h1 id="app-title">SignNova</h1>
+            <p>"when hands speak, voices follow"</p>
+        </div>
+        <button id="mode-toggle" class="nav-btn">
+            <span role="img" aria-label="mode">💡</span> Light Mode
+        </button>
+    </header>
+
+    <main class="main-content">
+        
+        <div class="card gesture-area">
+            <h2 class="card-title">Your Gesture</h2>
+            <div class="webcam-wrapper">
+                <video id="webcam" autoplay muted playsinline></video>
+                <canvas id="landmark-canvas"></canvas>
+            </div>
+            <div class="current-alphabet-label">
+                Current Alphabet : <span id="current-letter">N/A</span>
+            </div>
+        </div>
+
+        <div class="card speech-area">
+            <h2 class="card-title">Your Speech</h2>
+            <div class="output-display">
+                <p>Current Alphabet : <span id="current-alphabet-right">N/A</span></p>
+                <p>Current Word : <span id="current-word">N/A</span></p>
+                <p>Current Sentence : <span id="current-sentence">N/A</span></p>
+            </div>
+            
+            <div class="control-buttons">
+                <button id="speak-btn" class="control-btn speak-btn">Speak</button>
+                <button id="next-word-btn" class="control-btn next-word-btn">Next Word</button>
+                <button id="reset-btn" class="control-btn reset-btn">Reset</button>
+                <button class="control-btn ellipsis-btn">...</button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer-area">
+        <button id="records-btn" class="nav-btn records-btn">
+            <span role="img" aria-label="records">🗂</span> Records
+        </button>
+        <p id="tts-status" class="status-message">🔊 System Status: Ready</p>
+    </footer>
+
+  </div>
+
+  <script>
+    // Fade in current page
+    document.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.add('loaded');
+    });
+    
+    // Navigation function with fade transition
+    function navigate(page) {
+        document.body.classList.remove('loaded');
+        setTimeout(() => {
+            window.location.href = page;
+        }, 500);
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

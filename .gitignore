@@ -1,0 +1,27 @@
+# --- General Python Files ---
+_pycache_/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# --- IDE Files (Visual Studio Code) ---
+.vscode/
+
+# --- Operating System Files ---
+.DS_Store # Mac OS
+Thumbs.db # Windows
+
+# --- Project-Specific Files to IGNORE ---
+
+# 1. LARGE DATASET FILES
+# Ignore the raw images and the generated keypoints file
+data/raw_images/
+data/processed_keypoints.csv
+
+# 2. MODEL ARTIFACTS
+# Ignore the final trained model files and label encoder
+server/model/*.pkl
+server/model/*.h5

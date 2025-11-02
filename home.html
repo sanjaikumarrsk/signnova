@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGNNOVA Hero Section</title>
+    
+    <style>
+        /* FADE TRANSITION */
+        .page {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .page.loaded {
+            opacity: 1;
+        }
+
+        /* BASE: Background Styles (Will NOT change) */
+        body {
+            background-image: url('hand.jpeg'); 
+            background-size: cover;         
+            background-position: center;    
+            background-repeat: no-repeat;   
+            min-height: 100vh;              
+            margin: 0;                      
+            font-family: Arial, sans-serif;
+            color: white;                   
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9); 
+            
+            display: flex;
+            flex-direction: column; 
+            justify-content: flex-start; 
+            align-items: center; 
+            overflow-x: hidden;
+            padding-bottom: 20px; 
+        }
+
+        /* HEADER BAR (Will NOT change) */
+        .header-bar {
+            width: 100%;
+            padding: 15px 50px; 
+            background-color: rgba(18, 20, 48, 0.9); 
+            box-sizing: border-box; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: fixed; 
+            top: 0;
+            left: 0;
+            z-index: 1000; 
+        }
+
+        /* OG CODERS Logo (Will NOT change style) */
+        .header-logo {
+            font-size: 1.8em; 
+            font-weight: bold;
+            color: #E0E0FF; 
+            text-decoration: none; 
+            letter-spacing: 1px;
+        }
+        
+        /* Container for the navigation links/buttons */
+        .header-nav {
+            display: flex;
+            gap: 10px; 
+        }
+        
+        /* Styling for the navigation buttons/links */
+        .nav-button {
+            text-decoration: none;
+            color: white;
+            font-size: 0.9em;
+            font-weight: 500;
+            padding: 8px 15px; 
+            border: 1px solid white; 
+            border-radius: 5px; 
+            text-transform: uppercase;
+            transition: background-color 0.3s; 
+            cursor: pointer;
+        }
+        
+        /* Optional: Hover effect for interaction */
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* MAIN CONTENT STYLING (The Hero Section - two-column layout) */
+        .main-content {
+            flex-grow: 1; 
+            width: 100%;
+            padding: 80px 50px 0; 
+            box-sizing: border-box;
+            
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+            
+            margin-top: 15vh; 
+        }
+        
+        /* Left Hero Content Container (SIGNNOVA block) */
+        .left-hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; 
+        }
+
+        /* SIGNNOVA Main Title */
+        .signnova-title {
+            font-size: 4em; 
+            font-weight: 900; 
+            color: white; 
+            line-height: 1; 
+            margin-bottom: 5px;
+            margin-top: 0; 
+        }
+
+        /* Tagline below SIGNNOVA */
+        .signnova-tagline {
+            font-size: 1.2em; 
+            color: white; 
+            font-weight: 300; 
+            margin-top: 0; 
+            margin-bottom: 30px; 
+        }
+        
+        /* Styling for the large call-to-action button (Gradient and high radius) */
+        .hero-button {
+            display: inline-block;
+            text-decoration: none;
+            
+            /* Text Color and Style */
+            color: white;
+            font-size: 1.1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            
+            /* Positioning */
+            padding: 12px 25px;
+            margin-top: 100px; /* Pushes button down as requested */
+
+            /* Visual Appearance */
+            border-radius: 25px; 
+            background: linear-gradient(to right, #4A90E2, #5C6BC0); 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6); 
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+
+        .hero-button:hover {
+            opacity: 0.9;
+        }
+
+        /* Right Hero Content Container */
+        .right-hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; 
+            text-align: right; 
+            margin-top: 50px; 
+            margin-right: 50px; 
+        }
+
+        /* Styling for Right Side Text (general properties) */
+        .right-hero-text {
+            font-family: 'Times New Roman', serif; 
+            font-size: 1.1em; 
+            color: #E0E0FF; 
+            font-weight: 300; 
+            line-height: 1.5; 
+            margin-bottom: 0; 
+            margin-top: 0;
+        }
+        
+        /* Specific styling for "THE FUTURE OF INTERACTION" (Bolded line) */
+        .right-hero-text.bold-line {
+            font-weight: 700; 
+            font-size: 1.3em; 
+            letter-spacing: 0.5px; 
+            margin-bottom: 5px; 
+            color: white; 
+        }
+
+        /* Specific styling for the 'Explore...' line */
+        .right-hero-text.explore {
+            font-size: 1.1em;
+            font-weight: 400; 
+            margin-top: 15px; 
+            letter-spacing: 1px;
+            color: #CCCCFF; 
+        }
+    </style>
+</head>
+<body class="page">
+    
+    <div class="header-bar">
+        <a href="home.html" class="header-logo">OG CODERS</a>
+        
+        <div class="header-nav">
+            <a onclick="navigate('home.html')" class="nav-button">HOME</a>
+            <a onclick="navigate('howitworks.html')" class="nav-button">HOW IT WORKS</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="left-hero-content">
+            <div class="signnova-title">SIGNNOVA</div>
+            <div class="signnova-tagline">when hand speaks, the world listens</div>
+            
+            <a onclick="navigate('index.html')" class="hero-button">START COMMUNICATING</a>
+        </div>
+
+        <div class="right-hero-content">
+            <div class="right-hero-text bold-line">THE FUTURE OF INTERACTION</div>
+            <div class="right-hero-text">IS AT YOUR HANDSIGNS,</div>
+            <div class="right-hero-text explore">EXPLORE....</div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Fade in current page
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+        });
+        
+        // Navigation function with fade transition
+        function navigate(page) {
+            document.body.classList.remove('loaded');
+            setTimeout(() => {
+                window.location.href = page;
+            }, 500);
+        }
+    </script>
+</body>
+</html>

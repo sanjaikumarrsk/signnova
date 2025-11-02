@@ -1,0 +1,327 @@
+/* --- Global Reset --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+:root {
+    --bg-dark: #1f2231;
+    --bg-light: #f4f6f9;
+    --card-dark: #12141d;
+    --card-light: #ffffff;
+    --text-dark: #e0e0e0;
+    --text-light: #1f2231;
+    --primary-color: #ff69b4; /* Pink for SignNova */
+    --accent-color: #61dafb; /* Blue/Cyan */
+    --word-color: #fcc203;
+    --sentence-color: #4CAF50;
+    --reset-color: #f44336;
+    --speak-color: #4CAF50;
+    --next-word-color: #2196F3;
+    --card-border-color: #61dafb;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------------------------
+   BASE STYLES: Dark Mode Default
+   --------------------------------- */
+body.dark-mode {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+    background-image: radial-gradient(#3a3f57 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.container {
+    background-color: var(--bg-dark);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    width: 95%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ---------------------------------
+   LIGHT MODE OVERRIDES
+   --------------------------------- */
+body.light-mode {
+    background-color: var(--bg-light);
+    background-image: radial-gradient(#b0b0b0 1px, transparent 0);
+    color: var(--text-light);
+}
+body.light-mode .container {
+    background-color: var(--bg-light);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+body.light-mode .card {
+    background-color: var(--card-light);
+    color: var(--text-light);
+    border: 1px solid #ddd;
+}
+body.light-mode .card-title {
+    color: var(--text-light);
+}
+
+/* ---------------------------------
+   HEADER/TITLE
+   --------------------------------- */
+.header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.title-area {
+    text-align: center;
+}
+
+#app-title {
+    font-size: 3.5em;
+    font-weight: 800;
+    letter-spacing: 2px;
+    /* Custom SignNova gradient effect */
+    background: linear-gradient(90deg, #ff8cbf, #ff33a3, #ff8cbf);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.title-area p {
+    font-style: italic;
+    font-size: 0.9em;
+    color: var(--accent-color);
+    margin-top: -10px;
+}
+
+.nav-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: var(--shadow);
+}
+.nav-btn:hover {
+    filter: brightness(1.1);
+}
+
+/* ---------------------------------
+   MAIN CONTENT (TWO COLUMNS)
+   --------------------------------- */
+.main-content {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.card {
+    flex: 1;
+    background-color: var(--card-dark);
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px dashed var(--card-border-color); /* Dashed border for effect */
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+    text-align: center;
+}
+
+/* Left Column - Gesture Area */
+.gesture-area {
+    min-height: 400px;
+}
+
+.webcam-wrapper {
+    position: relative; 
+    width: 100%;
+    flex-grow: 1; /* Allow wrapper to take up space */
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+#webcam, #landmark-canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* CRITICAL FIX: Mirror the visual content using CSS */
+    transform: scaleX(-1); 
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#webcam { z-index: 10; }
+#landmark-canvas { z-index: 20; }
+
+.current-alphabet-label {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 1.1em;
+    padding-left: 5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 10px;
+}
+.current-alphabet-label #current-letter {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Right Column - Speech Area */
+.speech-area {
+    justify-content: space-between;
+    min-height: 400px;
+}
+
+.output-display {
+    text-align: left;
+    padding: 15px;
+    flex-grow: 1;
+}
+.output-display p {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+}
+.output-display span {
+    font-weight: bold;
+    float: right;
+    max-width: 60%;
+    word-break: break-word;
+}
+#current-alphabet-right { color: var(--accent-color); font-size: 1.2em;}
+#current-word { color: var(--word-color); }
+#current-sentence { color: var(--sentence-color); }
+
+/* --- NEW: VOICE SELECTION STYLES --- */
+.voice-selection-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.voice-selection-area label {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+#voice-select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--accent-color);
+    background-color: var(--card-dark);
+    color: var(--text-dark);
+    font-size: 1em;
+    cursor: pointer;
+    flex-grow: 1;
+    max-width: 70%;
+}
+
+body.light-mode #voice-select {
+    background-color: var(--card-light);
+    color: var(--text-light);
+    border: 1px solid #ccc;
+}
+/* ---------------------------------- */
+
+
+/* Control Buttons */
+.control-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    padding-top: 20px;
+    /* Removed border-top here since voice-selection-area now has it */
+}
+
+.control-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--text-light); /* White/Light color for text */
+    flex: 1;
+}
+.speak-btn { background-color: var(--speak-color); }
+.next-word-btn { background-color: var(--next-word-color); }
+.reset-btn { background-color: var(--reset-color); }
+
+.control-btn:hover {
+    opacity: 0.9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------------------------------
+   FOOTER
+   --------------------------------- */
+.footer-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+}
+.records-btn {
+    margin-right: 30px;
+}
+.status-message {
+    font-size: 0.9em;
+    color: var(--accent-color);
+}
+
+
+/* ---------------------------------
+   RESPONSIVENESS
+   --------------------------------- */
+@media (max-width: 800px) {
+    .main-content {
+        flex-direction: column;
+    }
+    .header-controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .title-area {
+        order: 1; /* Move title to the top */
+    }
+    .nav-btn {
+        width: 100%;
+    }
+    .control-buttons {
+        flex-wrap: wrap;
+    }
+    .control-btn {
+        flex: auto;
+        min-width: 45%;
+    }
+}

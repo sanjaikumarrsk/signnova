@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture-Based Interaction UI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            
+            /* UPDATED: Lighter Base Color */
+            background-color: #2c5d80; /* Lighter shade of dark blue/green */
+            
+            /* UPDATED: Reduced opacity of the gradient overlay to make it lighter */
+            background-image: 
+                linear-gradient(135deg, rgba(44, 93, 128, 0.6), rgba(60, 120, 180, 0.6)), /* Lighter gradient overlay (0.6 opacity) */
+                url('history.jpeg'); /* The pattern image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            
+            color: #e0f2f7; /* Lighter text for dark background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-size: 14px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        /* COLORS remaining the same as they were chosen for the blue theme */
+        h2 {
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            color: #81d4fa; /* A bright, vibrant blue for headings */
+        }
+
+        /* --- Header Styling --- */
+        .page-header {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .page-header a {
+            color: #e0f2f7; 
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1em;
+            padding: 10px 15px;
+            border-radius: 20px;
+            background-color: rgba(0, 188, 212, 0.2); 
+            backdrop-filter: blur(5px);
+            transition: background-color 0.3s ease;
+            border: 1px solid rgba(129, 212, 250, 0.4);
+        }
+
+        .page-header a:hover {
+            background-color: rgba(0, 188, 212, 0.4);
+        }
+        /* --- End Header Styling --- */
+
+        .ui-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.2); 
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(129, 212, 250, 0.1); 
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            color: #e0f2f7; 
+        }
+
+        .usage-section {
+            grid-area: 1 / 1 / 2 / 2;
+            padding-bottom: 30px;
+        }
+
+        .history-section {
+            grid-area: 1 / 2 / 2 / 3;
+            padding: 25px;
+        }
+        
+        .bar-chart {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 150px;
+            padding: 0 10px;
+        }
+        .bar {
+            width: 10%;
+            background-color: #00bcd4; 
+            border-radius: 5px 5px 0 0;
+            transition: height 0.3s ease;
+            cursor: pointer;
+        }
+
+        .chart-x-axis {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #a7d9ed; 
+        }
+
+        .gesture-history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+
+        .gesture-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 188, 212, 0.1); 
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .gesture-details h3 {
+            margin: 0;
+            font-size: 1em;
+            color: #e0f2f7;
+        }
+
+        .gesture-details p {
+            margin: 0;
+            font-size: 0.8em;
+            color: #a7d9ed; 
+        }
+        
+        .play-button {
+            background: #00bcd4; 
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .play-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 55%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 10px solid #fff;
+        }
+
+        .impact-section {
+            grid-column: span 2;
+        }
+
+        .quote-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .translation-count {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .translation-count .count {
+            font-size: 3em;
+            font-weight: 700;
+            color: #81d4fa; 
+        }
+
+        .translation-count p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #a7d9ed;
+        }
+
+        .quote-text {
+            font-size: 1em;
+            font-style: italic;
+            flex-grow: 1;
+            line-height: 1.5;
+            background: rgba(0, 188, 212, 0.1); 
+            padding: 20px;
+            border-radius: 8px;
+            color: #e0f2f7;
+        }
+
+        .action-button {
+            background: #ffc107; 
+            border: 1px solid #ffc107;
+            color: #333; 
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            font-size: 0.9em;
+            box-shadow: 0 4px 6px rgba(255, 193, 7, 0.3);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .action-button:hover {
+            background-color: #ffca28;
+            border-color: #ffca28;
+        }
+        
+        /* Existing media queries */
+        @media (max-width: 768px) {
+            .ui-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .impact-section {
+                grid-column: span 1;
+            }
+            .quote-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .quote-text {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <a href="#">Home</a>
+        <a href="#">Live Gestures</a>
+    </div>
+
+    <div class="container">
+        <div class="ui-wrapper">
+            <div class="card usage-section">
+                <h2>USAGE STATISTICS</h2>
+                <div class="bar-chart">
+                    <div class="bar" style="height: 45%;"></div>
+                    <div class="bar" style="height: 60%;"></div>
+                    <div class="bar" style="height: 75%;"></div>
+                    <div class="bar" style="height: 55%;"></div>
+                    <div class="bar" style="height: 65%;"></div>
+                    <div class="bar" style="height: 48%;"></div>
+                    <div class="bar" style="height: 40%;"></div>
+                </div>
+                <div class="chart-x-axis">
+                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                </div>
+            </div>
+            
+            <div class="card history-section">
+                <h2>GESTURE HISTORY</h2>
+                <div class="gesture-history-list">
+                    <div class="gesture-item">
+                        <div class="gesture-details">
+                            <h3>Hello</h3>
+                            <p>10:32 AM, 02 Oct 2025</p>
+                        </div>
+                        <button class="play-button"></button>
+                    </div>
+                    <div class="gesture-item">
+                        <div class="gesture-details">
+                            <h3>Swipe Left</h3>
+                            <p>10:31 AM, 02 Oct 2025</p>
+                        </div>
+                        <button class="play-button"></button>
+                    </div>
+                    <div class="gesture-item">
+                        <div class="gesture-details">
+                            <h3>Thumbs Up</h3>
+                            <p>10:30 AM, 02 Oct 2025</p>
+                        </div>
+                        <button class="play-button"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card impact-section">
+                <h2>IMPACT SHOWCASE</h2>
+                <div class="quote-container">
+                    <div class="translation-count">
+                        <div class="count">1240</div>
+                        <p>signs translated till now</p>
+                    </div>
+                    <div class="quote-text">
+                        "This has greatly improved my communication with my deaf colleague."
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="action-button">RESET HISTORY</button>
+    </div>
+</body>
+</html>

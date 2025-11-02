@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Signnova Works</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* FADE TRANSITION */
+        .page {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .page.loaded {
+            opacity: 1;
+        }
+
+        /* ADDED/UPDATED: NAVIGATION BAR STYLES (Copied from index.html) */
+        .header-bar {
+            width: 100%;
+            padding: 15px 50px; 
+            background-color: rgba(18, 20, 48, 0.9); 
+            box-sizing: border-box; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: fixed; 
+            top: 0;
+            left: 0;
+            z-index: 1000; 
+        }
+
+        .header-logo {
+            font-size: 1.8em; 
+            font-weight: bold;
+            color: #E0E0FF; 
+            text-decoration: none; 
+            letter-spacing: 1px;
+        }
+        
+        .header-nav {
+            display: flex;
+            gap: 10px; 
+        }
+        
+        .nav-button {
+            text-decoration: none;
+            color: white;
+            font-size: 0.9em;
+            font-weight: 500;
+            padding: 8px 15px; 
+            border: 1px solid white; 
+            border-radius: 5px; 
+            text-transform: uppercase;
+            transition: background-color 0.3s; 
+            cursor: pointer;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        /* END NAVIGATION BAR STYLES */
+
+        /* 1. Basic Reset and Global Styles */
+        body {
+            margin: 0;
+            padding-top: 60px; /* IMPORTANT: Add padding to body to clear the fixed header bar */
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: #f7f9fb;
+            color: #333;
+        }
+
+        /* 2. Main Header with Gradient Background (Adjusted padding to account for the navbar) */
+        .main-header {
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            padding: 60px 20px; /* Reduced padding from 120px to prevent excessive height */
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 3. Title Styling ("How Signnova Works") */
+        h1 {
+            font-size: 4em;
+            font-weight: 800;
+            color: #1a5276;
+            margin: 0;
+            letter-spacing: 5px;
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
+        }
+
+        /* 4. Main Content Area Styling */
+        main {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #cfdef3;
+            padding-bottom: 15px;
+            margin-top: 40px;
+            font-weight: 600;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+            font-weight: 500;
+        }
+        
+        /* Styling for the numbered steps (Four Core Steps) */
+        main ol {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        main ol li {
+            margin-bottom: 25px;
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            position: relative;
+            padding-left: 70px;
+            min-height: 40px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        main ol li strong {
+            color: #1a5276;
+            font-weight: 700;
+        }
+
+        /* Custom step number styling (where the error was likely pointing) */
+        main ol li::before {
+            content: "0" counter(list-item);
+            counter-increment: list-item;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #1a5276;
+            color: #ffffff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Adjust content if number is double digit (e.g., 10+) */
+        main ol li:nth-child(n+10)::before {
+            content: counter(list-item);
+            font-size: 0.9em;
+        }
+
+
+        /* Styling for the "Why It's Special" section */
+        .special-features {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px dashed #cfdef3;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background-color: #f0f8ff;
+            border: 1px solid #e0eafc;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card i {
+            font-size: 2.5em;
+            color: #1a5276;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        /* Styling for the new image section */
+        .language-of-hands {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px dashed #cfdef3;
+            text-align: center;
+        }
+
+        .language-of-hands img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="page">
+
+    <div class="header-bar">
+        <a onclick="navigate('home.html')" class="header-logo">OG CODERS</a>
+        
+        <div class="header-nav">
+            <a onclick="navigate('home.html')" class="nav-button">HOME</a>
+        </div>
+    </div>
+    <header class="main-header">
+        <h1>How Signnova Works</h1>
+    </header>
+
+    <main>
+        <h2>The Signnova Process, Simplified</h2>
+        
+        <h3>The Four Core Steps</h3>
+        <ol>
+            <li><strong>Show Your Gesture:</strong> Just raise your hand and make a sign in front of your device's camera. No extra gadgets needed.</li>
+            <li><strong>AI Understands It:</strong> Our smart AI instantly recognizes your gesture and figures out what you want to say.</li>
+            <li><strong>Get Your Voice Back:</strong> The system converts your sign into clear speech and text on screen — giving you a real-time voice.</li>
+            <li><strong>Communicate Freely:</strong> Now, you can talk to anyone around you — at home, in school, at work, or anywhere.</li>
+        </ol>
+
+        <div class="special-features">
+            <h2>💡 Why Signnova Is Special</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i> <p>Works on any phone or laptop.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-tachometer-alt"></i> <p>Real-time & accurate.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-globe-americas"></i> <p>Breaks barriers for millions who cannot speak.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="language-of-hands">
+            <h2>Learn the Language of Hands</h2>
+            <p>Signnova empowers communication, and understanding basic signs can enhance interaction even further!</p>
+            <img src="alphabet.png" alt="Sign Language Alphabet">
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+        });
+        
+        function navigate(page) {
+            document.body.classList.remove('loaded');
+            setTimeout(() => {
+                window.location.href = page;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
